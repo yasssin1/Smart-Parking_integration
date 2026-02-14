@@ -1,0 +1,21 @@
+# Fichiers temporaires Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environnements virtuels (si tes camarades en utilisent)
+venv/
+env/
+.env
+
+# Fichiers de configuration VS Code / IDE
+.vscode/
+.idea/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+#backend resources
+Backend_API/node_modules
+Backend_API/parking.db

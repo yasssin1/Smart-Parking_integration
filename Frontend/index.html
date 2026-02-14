@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Parking IoT Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+    
+
+</head>
+<body>
+
+    <nav class="navbar navbar-dark bg-dark mb-4 shadow-sm">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1"><i class="fas fa-parking me-2"></i> IoT Smart System</span>
+            <span class="badge bg-success px-3 py-2 rounded-pill" id="connection-status">System Online</span>
+        </div>
+    </nav>
+
+    <div class="container pb-5">
+        <div class="row mb-4 g-3">
+            <div class="col-md-4">
+                <div class="stat-box border-success border-start border-4">
+                    <h3 class="stat-number text-success" id="count-free">0</h3>
+                    <p class="text-muted mb-0">Free Spots</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-box border-danger border-start border-4">
+                    <h3 class="stat-number text-danger" id="count-occupied">0</h3>
+                    <p class="text-muted mb-0">Occupied</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-box border-primary border-start border-4">
+                    <h3 class="stat-number text-primary" id="count-reserved">0</h3>
+                    <p class="text-muted mb-0">Reserved</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
+                <h5 class="mb-0 fw-bold"><i class="fas fa-map-marked-alt text-secondary me-2"></i> Live Parking Map</h5>
+                <button class="btn btn-sm btn-outline-secondary" onclick="fetchSpots()">
+                    <i class="fas fa-sync-alt me-1"></i> Refresh
+                </button>
+            </div>
+            <div class="card-body bg-light">
+                <div id="parking-container" class="parking-grid">
+                    <div class="text-center w-100 py-5 text-muted">
+                        <div class="spinner-border text-primary mb-2" role="status"></div>
+                        <p>Loading parking data...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow">
+            <div class="card-header bg-dark text-white py-2">
+                <i class="fas fa-tools me-2"></i> Parking Manager
+            </div>
+            <div class="card-body">
+                <form id="add-spot-form" class="row g-3 align-items-end">
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold small">Spot ID</label>
+                        <input type="text" class="form-control" id="new-spot-id" placeholder="e.g. A1" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold small">Row Selection</label>
+                        <select class="form-select" id="new-spot-row">
+                            <option value="TOP">Top Row (Max 6)</option>
+                            <option value="BOTTOM">Bottom Row (Max 6)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-success w-100 fw-bold">
+                            <i class="fas fa-magic me-1"></i> Auto-Add Spot
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="reserveModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">Reserve Spot <span id="modal-spot-id" class="fw-bold"></span></h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <label class="form-label">Driver Name</label>
+                    <input type="text" id="reserver-name" class="form-control" placeholder="Enter name...">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="confirmReservation()">Confirm Reservation</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>
